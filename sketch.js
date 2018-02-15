@@ -94,7 +94,7 @@ function windowResized() {
   // whilst a particle exists. 
   if (morethan1timeClicked === true && this.p.isDead() === false) {
     //print(p.lifespan);
-    parent.updateSlider_inlet10(currentWidth);
+    parent.updateSlider_inlet10(currentWidth);//pass the new indow width into the sound engine to change the scale range of stereo panning.
     parent.updateSlider_inlet11(currentHeight);
   }
 }
@@ -103,7 +103,7 @@ function windowResized() {
 
 function draw() {
   
-  background(initlifespan);
+  background(255);
   
   //call parent method to activate dsp, i.e. function start()
   if (dsp == true) {
