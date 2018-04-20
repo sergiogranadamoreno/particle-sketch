@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!-- Head -->
+
+  <head>
+    <meta charset="utf-8">
+    <title>test5</title>
+
+    <script src="libraries/p5.js" type="text/javascript"></script>
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+    <script src="libraries/quicksettings.js" type="text/javascript"></script>
+    <script src="libraries/p5.gui.js" type="text/javascript"></script>
+    
+    <script language="javascript" type="text/javascript" src="particle.js"></script>
+    <script language="javascript" type="text/javascript" src="sketch.js"></script>
+    <script type="application/javascript" src="./test5.js"></script>
+    
+    <!-- some global style -->
+
+    <style>
+
+    .body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+
+      /* This centers our sketch horizontally. */
+      justify-content: center;
+
+      /* This centers our sketch vertically. */
+      align-items: center;
+    }
+
+    .coltransport{position:relative;left: 1100px; top: 0px;}
+
+    .cell {display: table-cell;padding-right: 10px;}
+
+    .row {
+      visibility: hidden;
+      display: table-row;
+
+    }
+
+    </style>
+
+    <!-- https://enzienaudio.com/docs/index.html#08.javascript -->
+
+    <script type="text/javascript">
+      var webAssemblySupported = (typeof WebAssembly === 'object');
+      var heavyModule = null;
+      var loader = null;
+
+      window.onload = function() {
+        if (webAssemblySupported) {
+          heavyModule = test5_Module();
+          heavyModule['onRuntimeInitialized'] = moduleLoaded;
+        }
+        else {
+          console.warn("heavy: web assembly not found, falling back to asm.js");
+
+          var script = document.createElement('script');
+          script.src = "test5.asm.js";
+          script.onload = function() {
+            heavyModule = test5_AsmModule();
+            moduleLoaded();
+          }
+          document.body.appendChild(script);
+        }
+        document.getElementById("transportButton").style.visibility = "hidden";
+      }
+
+      function moduleLoaded() {
+        loader = new heavyModule.AudioLibLoader();
+        loader.init({
+          // optional: set audio processing block size, default is 2048
+          blockSize: 2048,
+          // optional: provide a callback handler for [print] messages
+          printHook: onPrint,
+          // optional: provide a callback handler for [s {sendName} @hv_param] messages
+          sendHook: onFloatMessage,
+          // optional: pass an existing web audio context, otherwise a new one
+          // will be constructed.
+          webAudioContext: null
+        });
+        updateSlider_inlet1(70.0); //positionx
+        updateSlider_inlet2(355.5); //positiony
+        updateSlider_inlet3(0.0); //velocityx
+        updateSlider_inlet4(0.0); //velocityy
+        updateSlider_inlet5(0.0); //accelerationx
+        updateSlider_inlet6(0.04); //accelerationy
+        updateSlider_inlet7(255.0); //lifespan
+        updateSlider_inlet8(255.0); //initlifespan
+        updateSlider_inlet9(0.0); //scalemode
+        updateSlider_inlet10(1366.0); //cW
+        updateSlider_inlet11(768.0); //cH
+
+        document.getElementById("transportButton").style.visibility = "visible";
+      }
+
+      function hvPrintHook(message) {
+        console.log(message);
+      }
+
+      function hvSendHook(message) {
+        console.log(message);
+      }
+
+       function start() {
+        loader.start();
+      }
+
+      function stop() {
+        loader.stop();
+      }
+
+      function toggleTransport(element) {
+        (loader.isPlaying) ? stop() : start();
+      }
+
+      function onPrint(message) {
+        console.log(message);
+      }
+
+      function onFloatMessage(sendName, floatValue) {
+        console.log(sendName, floatValue);
+      }
+
+      // Generated Event Update Methods
+      function sendEvent_trigger() {
+        loader.audiolib.sendEvent("trigger");
+      }
+
+      // Generated Parameter Update Methods
+      function updateSlider_inlet1(value) {
+        document.getElementById("value_inlet1").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet1", value);
+      }
+
+      function updateSlider_inlet2(value) {
+        document.getElementById("value_inlet2").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet2", value);
+      }
+
+      function updateSlider_inlet3(value) {
+        document.getElementById("value_inlet3").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet3", value);
+      }
+
+      function updateSlider_inlet4(value) {
+        document.getElementById("value_inlet4").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet4", value);
+      }
+
+      function updateSlider_inlet5(value) {
+        document.getElementById("value_inlet5").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet5", value);
+      }
+
+      function updateSlider_inlet6(value) {
+        document.getElementById("value_inlet6").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet6", value);
+      }
+
+      function updateSlider_inlet7(value) {
+        document.getElementById("value_inlet7").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet7", value);
+      }
+
+      function updateSlider_inlet8(value) {
+        document.getElementById("value_inlet8").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet8", value);
+      }
+
+      function updateSlider_inlet9(value) {
+        document.getElementById("value_inlet9").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet9", value);
+      }
+      
+      function updateSlider_inlet10(value) {
+        document.getElementById("value_inlet10").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet10", value);
+      }
+
+      function updateSlider_inlet11(value) {
+        document.getElementById("value_inlet11").textContent = Number(value).toFixed(2);
+        loader.audiolib.setFloatParameter("inlet11", value);
+      }
+
+    </script>
+  </head>
+
+  <!-- Head End -->
+
+  <!-- Body -->
+
+  <body>
+
+  <!-- put the canvas in an html div container 
+
+
+  <div id='myCanvasContainer'></div>
+
+  <!-- function start() button 
+
+      <div class="coltransport">
+          <label>
+            start / stop
+            <input type="checkbox" id="transportButton" onchange="toggleTransport();">
+          </label>
+        </div>
+      <!--
+      <div class="button">
+        <button type="button" id="transportButton" onclick="toggleTransport(this);"/>
+      </div> 
+    -->
+
+        <!-- Parameters Sliders -->
+
+        
+        <div class="row">
+        <div class="col parameter-name">inlet1</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet1" type="range" min="0.0" max="400.0" step="0.01" value="70.0" onchange="updateSlider_inlet1(value);" oninput="updateSlider_inlet1(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet1">70.0</div>
+      </div>
+      <div class="row">
+        <div class="col parameter-name">inlet2</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet2" type="range" min="0.0" max="400.0" step="0.01" value="355.5" onchange="updateSlider_inlet2(value);" oninput="updateSlider_inlet2(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet2">355.5</div>
+      </div>
+      <div class="row">
+        <div class="col parameter-name">inlet3</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet3" type="range" min="-1.0" max="1.0" step="0.01" value="0.0" onchange="updateSlider_inlet3(value);" oninput="updateSlider_inlet3(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet3">0.0</div>
+      </div>
+      <div class="row">
+        <div class="col parameter-name">inlet4</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet4" type="range" min="-1.0" max="1.0" step="0.01" value="0.0" onchange="updateSlider_inlet4(value);" oninput="updateSlider_inlet4(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet4">0.0</div>
+      </div>
+      <div class="row">
+        <div class="col parameter-name">inlet5</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet5" type="range" min="0.0" max="0.1" step="0.01" value="0.0" onchange="updateSlider_inlet5(value);" oninput="updateSlider_inlet5(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet5">0.0</div>
+      </div>
+      <div class="row">
+        <div class="col parameter-name">inlet6</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet6" type="range" min="0.0" max="0.1" step="0.01" value="0.04" onchange="updateSlider_inlet6(value);" oninput="updateSlider_inlet6(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet6">0.04</div>
+      </div>
+      <div class="row">
+        <div class="col parameter-name">inlet7</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet7" type="range" min="0.0" max="500.0" step="0.01" value="255.0" onchange="updateSlider_inlet7(value);" oninput="updateSlider_inlet7(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet7">255.0</div>
+      </div>
+      
+      <div class="row">
+        <div class="col parameter-name">inlet8</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet8" type="range" min="0.0" max="500.0" step="0.01" value="255.0" onchange="updateSlider_inlet8(value);" oninput="updateSlider_inlet8(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet8">255.0</div>
+      </div>
+      
+      <div class="row">
+        <div class="col parameter-name">inlet9</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet9" type="range" min="0.0" max="15.0" step="0.01" value="0.0" onchange="updateSlider_inlet9(value);" oninput="updateSlider_inlet9(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet9">0.0</div>
+      </div>
+
+      <div class="row">
+        <div class="col parameter-name">inlet10</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet10" type="range" min="0.0" max="10000.0" step="0.01" value="1366.0" onchange="updateSlider_inlet10(value);" oninput="updateSlider_inlet10(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet10">1366.0</div>
+      </div>
+
+      <div class="row">
+        <div class="col parameter-name">inlet11</div>
+        <div class="col parameter-slider">
+          <input id="parameter_inlet11" type="range" min="0.0" max="10000.0" step="0.01" value="768.0" onchange="updateSlider_inlet11(value);" oninput="updateSlider_inlet11(value)">
+        </div>
+        <div class="col parameter-value" id="value_inlet11"768.0</div>
+      </div>
+
+      </div>
+  </body>
+</html>
